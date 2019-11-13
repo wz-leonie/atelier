@@ -1,0 +1,128 @@
+---
+title: "atelier 4"
+author: "Léonie Villien"
+date: "13/11/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+nutriage <- read.csv("C:/Users/villien/Downloads/Atelier4-master/Atelier4-master/nutriage.csv")
+names(nutriage)
+```
+la taille
+## option 1
+
+```{r}
+hist(nutriage$taille)
+summary(nutriage$taille)
+```
+H: taille $\sim N(\mu,\sigma)$ le problème est $\Pr(taille < 0) >0$
+
+```{r}
+mean(nutriage$taille)
+sd(nutriage$taille)
+```
+on va calculer $\Pr(taille < 0)$ avec $taille \sim N(163.9602,9.003368)$
+
+```{r}
+pnorm(0,mean(nutriage$taille),sd(nutriage$taille))
+```
+
+
+## option 2
+
+soit $taille = e^X$ avec $X \sim N (\mu,\sigma)$. alors $X = ln(taille).$
+
+```{r}
+X <- log(nutriage$taille)
+hist(X)
+summary (X)
+Q <- seq(from=0,to=1,by=0.1)
+Q
+qnorm(Q)
+```
+
+qq.plot
+
+```{r}
+Z <- (X-mean(X))/sd(X)
+n <- length(Z)
+n
+Normal <- rnorm(n)
+qqplot(Normal,Z,xlim=c(-3,3),ylim=c(-3,3), xlab = "Normal",ylab="log(taille)")
+par(new=T)
+plot(Z,Z,type="l",col="red",xlim=c(-3,3),ylim=c(-3,3),xlab="",ylab="")
+```
+
+le poids
+## option 1
+
+```{r}
+hist(nutriage$poids)
+summary(nutriage$poids)
+mean(nutriage$poids)
+sd(nutriage$poids)
+pnorm(0,mean(nutriage$poids),sd(nutriage$poids))
+```
+
+
+## option 2
+
+soit $poids = e^X$ avec $X \sim N (\mu,\sigma)$. alors $X = ln(poids).$
+
+```{r}
+X <- log(nutriage$poids)
+hist(X)
+summary (X)
+Q <- seq(from=0,to=1,by=0.1)
+Q
+qnorm(Q)
+```
+
+qq.plot
+
+```{r}
+Z <- (X-mean(X))/sd(X)
+n <- length(Z)
+n
+Normal <- rnorm(n)
+qqplot(Normal,Z,xlim=c(-3,3),ylim=c(-3,3),xlab="Normal",ylab="log(poids)")
+par(new=T)
+plot(Z,Z,type="l",col="red",xlim=c(-3,3),ylim=c(-3,3),xlab="",ylab="")
+```
+
+cafe
+```{r}
+table(nutriage$cafe)
+mean(nutriage$cafe)
+var(nutriage$cafe)
+lambda <- (mean(nutriage$cafe)+var(nutriage$cafe))/2
+lambda
+simul <- rpois(1000,lambda)
+table(simul)
+```
+
+thé
+```{r}
+table(nutriage$the)
+mean(nutriage$the)
+var(nutriage$the)
+lambda <- (mean(nutriage$the)+var(nutriage$the))/2
+lambda
+simul <- rpois(1000,lambda)
+table(simul)
+```
+
+
+
+
+
+
+
+
+
+
